@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2b1428">
+  <title>Terkunci oleh Cinta</title>
+  <style><!
+    :root {
+      color-scheme: dark;
+      font-family: Georgia, "Times New Roman", serif;
+      --rose: #ff91aa;
+      --gold: #ffd9a0;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      margin: 0;
+      overflow-x: hidden;
+      display: grid;
+      place-items: center;
+      padding: max(1.5rem, env(safe-area-inset-top)) 0 max(1.5rem, env(safe-area-inset-bottom));
+      color: #fff5f4;
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(156, 56, 103, .43), transparent 34rem),
+        radial-gradient(ellipse at 12% 90%, rgba(100, 37, 91, .42), transparent 30rem),
+        linear-gradient(145deg, #180f24 0%, #32162f 52%, #170f22 100%);
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: 0;
+      content: "";
+      width: 22rem;
+      height: 22rem;
+      border: 1px solid rgba(255, 217, 160, .09);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    body::before { transform: translate(-31rem, -18rem); }
+    body::after { transform: translate(31rem, 19rem); width: 30rem; height: 30rem; }
+
+    #snow {
+      position: fixed;
+      z-index: 1;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+      width: min(100% - 2rem, 34rem);
+      padding: 2.5rem 1.5rem 2.8rem;
+      text-align: center;
+      animation: appear 1.2s ease-out both;
+    }
+
+    .eyebrow {
+      margin: 0 0 1.2rem;
+      color: var(--gold);
+      font: 600 .72rem/1.5 system-ui, sans-serif;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+    }
+
+    .lock-wrap {
+      position: relative;
+      width: min(68vw, 19rem);
+      margin: 0 auto 1.6rem;
+      filter: drop-shadow(0 1.2rem 2rem rgba(10, 4, 17, .45));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .lock-wrap::before {
+      position: absolute;
+      z-index: -1;
+      inset: 20% 5% 0;
+      border-radius: 50%;
+      content: "";
+      background: rgba(255, 102, 144, .2);
+      filter: blur(2.5rem);
+    }
+
+    .lock { display: block; width: 100%; height: auto; overflow: visible; }
+
+    .unlock-button,
+    .unlock-form {
+      position: absolute;
+      left: 50%;
+      width: 66%;
+      transform: translateX(-50%);
+    }
+
+    .unlock-button {
+      top: 74%;
+      min-height: 44px;
+      padding: .65rem .8rem;
+      border: 1px solid rgba(255, 240, 203, .9);
+      border-radius: 999px;
+      color: #672748;
+      background: linear-gradient(135deg, #fff0cb, #f3c98d);
+      box-shadow: 0 3px 14px rgba(57, 14, 38, .3);
+      font: 600 .8rem system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    .unlock-form {
+      top: 67%;
+      display: grid;
+      gap: .35rem;
+    }
+
+    .unlock-form[hidden] { display: none; }
+
+    .unlock-form label {
+      color: #fff8eb;
+      font: 600 .68rem system-ui, sans-serif;
+      text-shadow: 0 1px 5px rgba(76, 19, 47, .8);
+    }
+
+    .unlock-fields {
+      display: flex;
+      gap: .35rem;
+    }
+
+    .unlock-fields input {
+      width: 3rem;
+      min-height: 44px;
+      min-width: 0;
+      flex: 1;
+      padding: .5rem;
+      border: 1px solid rgba(255, 240, 203, .9);
+      border-radius: .55rem;
+      color: #4b1f38;
+      background: #fff8eb;
+      font: 600 .9rem system-ui, sans-serif;
+      text-align: center;
+    }
+
+    .unlock-fields button {
+      min-height: 44px;
+      padding: .5rem .65rem;
+      border: 1px solid rgba(255, 240, 203, .9);
+      border-radius: .55rem;
+      color: #672748;
+      background: linear-gradient(135deg, #fff0cb, #f3c98d);
+      font: 600 .76rem system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    .unlock-button:focus-visible,
+    .unlock-fields input:focus-visible,
+    .unlock-fields button:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
+
+    .unlock-error {
+      margin: 0;
+      color: #fff;
+      font: 600 .65rem/1.3 system-ui, sans-serif;
+      text-shadow: 0 1px 5px rgba(76, 19, 47, .9);
+    }
+
+    h1 {
+      margin: .25rem 0 .7rem;
+      color: #fff7f2;
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      font-weight: 400;
+      letter-spacing: -.035em;
+      text-shadow: 0 2px 28px rgba(255, 145, 170, .3);
+    }
+
+    .message {
+      max-width: 25rem;
+      margin: 0 auto;
+      color: rgba(255, 239, 239, .76);
+      font: 400 1rem/1.8 system-ui, sans-serif;
+    }
+
+    .heart-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .75rem;
+      margin-top: 1.5rem;
+      color: var(--rose);
+      font-size: 1rem;
+    }
+
+    .heart-line::before,
+    .heart-line::after {
+      width: 2.4rem;
+      height: 1px;
+      content: "";
+      background: linear-gradient(90deg, transparent, rgba(255, 145, 170, .7));
+    }
+
+    .heart-line::after { transform: rotate(180deg); }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      main {
+        width: min(100% - 1.5rem, 34rem);
+        padding: 1.5rem .75rem 2rem;
+      }
+
+      .eyebrow {
+        margin-bottom: .85rem;
+        font-size: .64rem;
+        letter-spacing: .2em;
+      }
+
+      .lock-wrap {
+        width: min(68vw, 16rem);
+        margin-bottom: 1.1rem;
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 8vw, 2.6rem);
+        line-height: 1.15;
+      }
+
+      .message {
+        max-width: 28rem;
+        font-size: .94rem;
+        line-height: 1.7;
+      }
+
+      .heart-line { margin-top: 1.1rem; }
+    }
+
+    @media (max-height: 600px) and (orientation: landscape) {
+      body { place-items: start center; }
+      main { padding-block: 1rem; }
+      .lock-wrap { width: min(42vw, 12rem); margin-bottom: .75rem; }
+      .eyebrow { margin-bottom: .5rem; }
+      .heart-line { margin-top: .75rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="snow" aria-hidden="true"></canvas>
+
+  <main>
+    <p class="eyebrow">Sebuah kisah tentang kita</p>
+
+    <div class="lock-wrap">
+      <svg class="lock" viewBox="0 0 300 340" aria-hidden="true">
+        <defs>
+          <linearGradient id="shackle" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#ffe8bc"/>
+            <stop offset=".48" stop-color="#d89a64"/>
+            <stop offset="1" stop-color="#fff0cb"/>
+          </linearGradient>
+          <linearGradient id="body" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#ffb0bd"/>
+            <stop offset=".48" stop-color="#e85c83"/>
+            <stop offset="1" stop-color="#a92e63"/>
+          </linearGradient>
+          <linearGradient id="heart" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#fff4e8"/>
+            <stop offset="1" stop-color="#ffd59f"/>
+          </linearGradient>
+          <filter id="soft-glow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path d="M94 144V97a56 56 0 0 1 112 0v47" fill="none" stroke="#7d3b54" stroke-width="31" stroke-linecap="round"/>
+        <path d="M94 140V97a56 56 0 0 1 112 0v43" fill="none" stroke="url(#shackle)" stroke-width="21" stroke-linecap="round"/>
+        <path d="M72 132h156a22 22 0 0 1 22 22v124a28 28 0 0 1-28 28H78a28 28 0 0 1-28-28V154a22 22 0 0 1 22-22Z" fill="url(#body)" stroke="#ffd4c0" stroke-opacity=".7" stroke-width="3"/>
+        <path d="M70 154a9 9 0 0 1 9-9h142" fill="none" stroke="#fff1df" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>
+        <path d="M150 187c-10-17-35-11-35 9 0 18 35 42 35 42s35-24 35-42c0-20-25-26-35-9Z" fill="url(#heart)" filter="url(#soft-glow)"/>
+        <circle cx="150" cy="254" r="10" fill="#ffe7bc"/>
+        <path d="M145 260h10l5 23h-20Z" fill="#ffe7bc"/>
+        <circle cx="86" cy="177" r="3" fill="#ffe9d0" opacity=".8"/>
+        <circle cx="214" cy="272" r="3" fill="#ffe9d0" opacity=".8"/>
+      </svg>
+      <button class="unlock-button" type="button" aria-controls="unlock-form">Buka gembok</button>
+      <form class="unlock-form" id="unlock-form" hidden>
+        <label for="password">Masukkan sandi</label>
+        <div class="unlock-fields">
+          <input id="password" name="password" type="password" inputmode="numeric" autocomplete="off" maxlength="10" required aria-describedby="unlock-error">
+          <button type="submit">Buka</button>
+        </div>
+        <p class="unlock-error" id="unlock-error" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <h1>ketik 1 untuk membuka kunci</h1>
+    <p class="message">Di antara dinginnya salju, ada satu hal yang selalu terasa hangat: hatiku yang memilihmu.</p>
+    <div class="heart-line" aria-hidden="true">♥</div>
+  </main>
+
+  <script>
+    const unlockButton = document.querySelector(".unlock-button");
+    const unlockForm = document.querySelector("#unlock-form");
+    const passwordInput = document.querySelector("#password");
+    const unlockError = document.querySelector("#unlock-error");
+
+    unlockButton.addEventListener("click", () => {
+      unlockButton.hidden = true;
+      unlockForm.hidden = false;
+      passwordInput.focus();
+    });
+
+    unlockForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (passwordInput.value === "1") {
+        window.location.href = "tilil.html";
+        return;
+      }
+
+      unlockError.textContent = "Sandi belum tepat. Coba lagi, ya.";
+      passwordInput.setAttribute("aria-invalid", "true");
+      passwordInput.select();
+    });
+
+    passwordInput.addEventListener("input", () => {
+      passwordInput.removeAttribute("aria-invalid");
+      unlockError.textContent = "";
+    });
+
+    (() => {
+      const canvas = document.querySelector("#snow");
+      const context = canvas.getContext("2d");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const flakes = [];
+      let width = 0;
+      let height = 0;
+      let animationFrame;
+
+      function makeFlake() {
+        const layerValue = Math.random();
+        const isLarge = layerValue > .72;
+        return {
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: (Math.random() * (isLarge ? 2.5 : 1.7) + (isLarge ? 1.2 : .6)),
+          speed: Math.random() * (isLarge ? 1.4 : 1.1) + (isLarge ? .9 : .4),
+          drift: (Math.random() - .5) * (isLarge ? 1.1 : .8),
+          sway: Math.random() * Math.PI * 2,
+          opacity: Math.random() * .55 + (isLarge ? .55 : .35),
+          layer: layerValue
+        };
+      }
+
+      function resize() {
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+        const count = Math.min(260, Math.max(170, Math.floor(width / 5)));
+        flakes.length = 0;
+        for (let i = 0; i < count; i++) {
+          flakes.push(makeFlake());
+        }
+      }
+
+      function drawFlake(flake) {
+        const wave = Math.sin((flake.y + flake.sway) * .024) * (flake.layer * 2.6 + .8);
+        const alpha = Math.min(1, flake.opacity + Math.sin((performance.now() * 0.003) + flake.sway) * .15);
+
+        context.beginPath();
+        context.shadowBlur = flake.radius * 8;
+        context.shadowColor = `rgba(255, 255, 255, ${Math.min(1, alpha + .2)})`;
+        context.fillStyle = `rgba(255, 249, 252, ${alpha})`;
+        context.arc(flake.x + wave, flake.y, flake.radius, 0, Math.PI * 2);
+        context.fill();
+      }
+
+      function draw() {
+        context.clearRect(0, 0, width, height);
+
+        for (const flake of flakes) {
+          drawFlake(flake);
+          flake.y += flake.speed;
+          flake.x += flake.drift + Math.sin((flake.y + flake.sway) * .03) * .2;
+
+          if (flake.y > height + 8) {
+            flake.y = -8;
+            flake.x = Math.random() * width;
+          }
+          if (flake.x < -10) flake.x = width + 10;
+          if (flake.x > width + 10) flake.x = -10;
+        }
+
+        animationFrame = requestAnimationFrame(draw);
+      }
+
+      function drawStatic() {
+        context.clearRect(0, 0, width, height);
+        for (const flake of flakes) {
+          drawFlake(flake);
+        }
+      }
+
+      resize();
+      if (reduceMotion) {
+        drawStatic();
+      } else {
+        draw();
+      }
+      window.addEventListener("resize", resize);
+      window.addEventListener("pagehide", () => cancelAnimationFrame(animationFrame), { once: true });
+    })();
+  </script>
+</body>
+</html>

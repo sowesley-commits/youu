@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>Selamat Ulang Tahun, Sayangku</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Georgia, "Times New Roman", serif;
+      --gold: #f5d69a;
+      --cream: #fff8eb;
+      --muted: #d6d3d9;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      margin: 0;
+      overflow-x: hidden;
+      display: grid;
+      place-items: center;
+      padding: max(1.5rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+      color: var(--cream);
+      background:
+        radial-gradient(ellipse at 50% 12%, rgba(105, 91, 131, .38), transparent 34rem),
+        radial-gradient(ellipse at 12% 90%, rgba(99, 67, 83, .3), transparent 28rem),
+        linear-gradient(145deg, #101522, #202032 55%, #111722);
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: 0;
+      width: 23rem;
+      height: 23rem;
+      border: 1px solid rgba(245, 214, 154, .12);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+
+    body::before { top: -15rem; left: -10rem; }
+    body::after { right: -15rem; bottom: -16rem; width: 34rem; height: 34rem; }
+
+    #snow {
+      position: fixed;
+      z-index: 1;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 42rem);
+      padding: clamp(2rem, 7vw, 4rem) clamp(1.25rem, 7vw, 4.5rem);
+      overflow: hidden;
+      text-align: center;
+      border: 1px solid rgba(245, 214, 154, .36);
+      border-radius: 1.5rem;
+      background: linear-gradient(145deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .025));
+      box-shadow: 0 2rem 6rem rgba(0, 0, 0, .34), inset 0 0 2rem rgba(255, 255, 255, .025);
+      backdrop-filter: blur(8px);
+      animation: arrive 1s ease-out both;
+    }
+
+    main::before {
+      position: absolute;
+      inset: .55rem;
+      border: 1px solid rgba(245, 214, 154, .12);
+      border-radius: 1.1rem;
+      content: "";
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 .8rem;
+      color: var(--gold);
+      font: 600 .68rem/1.5 system-ui, sans-serif;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .8rem;
+      margin: 1.15rem auto;
+      color: var(--gold);
+      font-size: .85rem;
+    }
+
+    .ornament::before,
+    .ornament::after {
+      width: 3rem;
+      height: 1px;
+      content: "";
+      background: linear-gradient(90deg, transparent, rgba(245, 214, 154, .75));
+    }
+
+    .ornament::after { transform: rotate(180deg); }
+
+    .cake {
+      display: block;
+      width: min(13rem, 55vw);
+      height: auto;
+      margin: 1rem auto .5rem;
+      filter: drop-shadow(0 1rem 2rem rgba(245, 177, 115, .18));
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    h1 {
+      margin: .25rem 0 .75rem;
+      color: var(--cream);
+      font-size: clamp(2.6rem, 9vw, 4.5rem);
+      font-weight: 400;
+      line-height: 1.03;
+      letter-spacing: -.055em;
+      text-shadow: 0 0 2rem rgba(245, 214, 154, .16);
+    }
+
+    h1 span {
+      display: block;
+      margin-top: .25rem;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .message {
+      max-width: 29rem;
+      margin: 1.25rem auto 0;
+      color: var(--muted);
+      font: 400 .98rem/1.85 system-ui, sans-serif;
+    }
+
+    .signature {
+      margin: 1.25rem 0 0;
+      color: var(--gold);
+      font-size: 1.2rem;
+      font-style: italic;
+    }
+
+    .surprise-button {
+      position: relative;
+      z-index: 1;
+      margin-top: 1.8rem;
+      min-height: 48px;
+      max-width: 100%;
+      padding: .8rem 1.3rem;
+      border: 1px solid rgba(245, 214, 154, .7);
+      border-radius: 999px;
+      color: var(--cream);
+      background: rgba(245, 214, 154, .1);
+      font: 500 .85rem system-ui, sans-serif;
+      letter-spacing: .04em;
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .surprise-button:hover {
+      transform: translateY(-2px);
+      background: rgba(245, 214, 154, .2);
+    }
+
+    .surprise-button:focus-visible {
+      outline: 2px solid var(--cream);
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        width: min(100%, 34rem);
+        padding: 1.8rem clamp(1rem, 5vw, 1.5rem);
+        border-radius: 1.15rem;
+      }
+
+      main::before { inset: .4rem; border-radius: .85rem; }
+
+      .eyebrow {
+        font-size: .62rem;
+        letter-spacing: .2em;
+      }
+
+      .ornament { margin: .8rem auto; }
+      .ornament::before, .ornament::after { width: 2rem; }
+
+      .cake {
+        width: min(10rem, 43vw);
+        margin: .55rem auto .3rem;
+      }
+
+      h1 {
+        font-size: clamp(2.15rem, 9.5vw, 3.4rem);
+        line-height: 1.08;
+      }
+
+      .message {
+        margin-top: .9rem;
+        font-size: .9rem;
+        line-height: 1.7;
+      }
+
+      .signature {
+        margin-top: 1rem;
+        font-size: 1.05rem;
+        line-height: 1.55;
+      }
+
+      .surprise-button {
+        width: min(100%, 20rem);
+        margin-top: 1.3rem;
+      }
+    }
+
+    @media (max-height: 650px) and (orientation: landscape) {
+      body { place-items: start center; }
+      main { margin-block: .5rem; }
+      .cake { width: min(8rem, 26vw); }
+      .ornament { margin: .5rem auto; }
+    }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glow {
+      0%, 100% { filter: drop-shadow(0 1rem 2rem rgba(245, 177, 115, .15)); }
+      50% { filter: drop-shadow(0 1rem 2.4rem rgba(245, 177, 115, .35)); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="snow" aria-hidden="true"></canvas>
+
+  <main>
+    <p class="eyebrow">Hari istimewa untuk orang tercintaku</p>
+    <div class="ornament" aria-hidden="true">✦</div>
+
+    <svg class="cake" viewBox="0 0 220 190" role="img" aria-label="Ilustrasi kue ulang tahun dengan lilin menyala">
+      <defs>
+        <linearGradient id="cakeTop" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0" stop-color="#fff0cf"/>
+          <stop offset="1" stop-color="#e7b974"/>
+        </linearGradient>
+        <linearGradient id="cakeSide" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#e99a92"/>
+          <stop offset="1" stop-color="#ad5364"/>
+        </linearGradient>
+        <radialGradient id="flame">
+          <stop offset="0" stop-color="#fff9cd"/>
+          <stop offset=".55" stop-color="#ffd47d"/>
+          <stop offset="1" stop-color="#f08e55" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="110" cy="157" rx="83" ry="15" fill="#080b13" opacity=".34"/>
+      <path d="M37 111h146v35c0 11-33 20-73 20s-73-9-73-20Z" fill="url(#cakeSide)"/>
+      <ellipse cx="110" cy="111" rx="73" ry="20" fill="url(#cakeTop)"/>
+      <path d="M37 114c13 7 19 1 27 7s15 3 23 0 14 6 23 5 15-6 23-3 15 4 22-1 14 1 28-5v12c-12 8-18 2-26 7s-15 2-23 0-14 5-23 4-15-6-23-3-15 3-22-1-15 1-29-5Z" fill="#fff0cf"/>
+      <path d="M83 47h8v51h-8zM106 42h8v56h-8zM129 47h8v51h-8z" rx="3" fill="#f3d9a8"/>
+      <path d="M87 36c-12-11 3-17 1-28 15 11 15 21 4 29Z" fill="url(#flame)"/>
+      <path d="M110 31c-12-11 3-17 1-28 15 11 15 21 4 29Z" fill="url(#flame)"/>
+      <path d="M133 36c-12-11 3-17 1-28 15 11 15 21 4 29Z" fill="url(#flame)"/>
+      <path d="M88 31c-5-5 2-9 2-14 7 7 5 12 0 15ZM111 26c-5-5 2-9 2-14 7 7 5 12 0 15ZM134 31c-5-5 2-9 2-14 7 7 5 12 0 15Z" fill="#fff3c2"/>
+      <circle cx="65" cy="109" r="3" fill="#ba7182"/>
+      <circle cx="153" cy="113" r="3" fill="#ba7182"/>
+      <circle cx="108" cy="122" r="3" fill="#ba7182"/>
+      <path d="M31 165h158" stroke="#f5d69a" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+
+    <h1>Selamat Ulang Tahun,<span>Sayangku</span></h1>
+    <p class="message">
+      Hari ini dunia terasa lebih indah, karena seseorang seistimewa kamu hadir di dalamnya.
+      Semoga setiap harimu dipenuhi kebahagiaan, tawa, kesehatan, dan semua hal baik yang kamu impikan.
+      Terima kasih sudah menjadi rumah paling nyaman untuk hatiku. Aku bersyukur bisa merayakan hari ini bersamamu.
+    </p>
+    <p class="signature">Semoga semua bahagiamu berlipat ganda. Aku sayang kamu ♥</p>
+    <button class="surprise-button" type="button">
+      Buka kejutan kecil
+    </button>
+    <div class="ornament" aria-hidden="true">✦</div>
+  </main>
+
+  <script>
+    (() => {
+      const canvas = document.querySelector("#snow");
+      const context = canvas.getContext("2d");
+      const button = document.querySelector(".surprise-button");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const flakes = [];
+      let width = 0;
+      let height = 0;
+      let animationFrame;
+
+      function resize() {
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+        const count = Math.min(180, Math.floor(width / 5));
+        flakes.length = 0;
+        for (let i = 0; i < count; i++) {
+          flakes.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 2.4 + .5,
+            speed: Math.random() * 1.15 + .3,
+            drift: (Math.random() - .5) * .55,
+            opacity: Math.random() * .55 + .3
+          });
+        }
+      }
+
+      function draw() {
+        context.clearRect(0, 0, width, height);
+        for (const flake of flakes) {
+          context.beginPath();
+          context.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+          context.fillStyle = `rgba(255, 250, 240, ${flake.opacity})`;
+          context.fill();
+          flake.y += flake.speed;
+          flake.x += flake.drift + Math.sin(flake.y * .012) * .24;
+          if (flake.y > height + 5) {
+            flake.y = -5;
+            flake.x = Math.random() * width;
+          }
+          if (flake.x < -5) flake.x = width + 5;
+          if (flake.x > width + 5) flake.x = -5;
+        }
+        animationFrame = requestAnimationFrame(draw);
+      }
+
+      button.addEventListener("click", () => {
+        window.location.href = "kuntul.html";
+      });
+
+      resize();
+      if (reduceMotion) {
+        for (const flake of flakes) {
+          context.beginPath();
+          context.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+          context.fillStyle = `rgba(255, 250, 240, ${flake.opacity})`;
+          context.fill();
+        }
+      } else {
+        draw();
+      }
+
+      window.addEventListener("resize", resize);
+      window.addEventListener("pagehide", () => cancelAnimationFrame(animationFrame), { once: true });
+    })();
+  </script>
+</body>
+</html>
